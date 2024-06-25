@@ -20,19 +20,31 @@ app.get('/api/users', async (req, res, next) => {
 });
 
 app.get('/api/users/:id', async (req, res, next) => {
-  const users = await TestUser.findById(req.params.id);
-  res.status(200).json({ message: 'Request received', data: users });
+  try {
+    const users = await TestUser.findById(req.params.id);
+    res.status(200).json({ message: 'Request received', data: users });
+  } catch (e) {
+    res.status(500).json({ message: 'bad received' + e.message });
+  }
 });
 
 app.post('/api/users', async (req, res, next) => {
-  const user = new TestUser(req.body);
-  const responce = await user.save();
-  res.status(200).json({ message: 'Request received', data: responce });
+  try {
+    const user = new TestUser(req.body);
+    const responce = await user.save();
+    res.status(200).json({ message: 'Request received', data: responce });
+  } catch (e) {
+    res.status(500).json({ message: 'bad received' + e.message });
+  }
 });
 
 app.delete('/api/users/:id', async (req, res, next) => {
-  const user = await TestUser.findByIdAndDelete(req.params.id);
-  res.status(200).json({ message: 'Request received', data: user });
+  try {
+    const user = await TestUser.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: 'Request received', data: user });
+  } catch (e) {
+    res.status(500).json({ message: 'bad received' + e.message });
+  }
 });
 
 mongoose
