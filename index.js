@@ -47,6 +47,15 @@ app.delete('/api/users/:id', async (req, res, next) => {
   }
 });
 
+app.patch('/api/users/:id', async (req, res, next) => {
+  try {
+    const user = await TestUser.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json({ message: 'Request received', data: user });
+  } catch (e) {
+    res.status(500).json({ message: 'bad received' + e.message });
+  }
+});
+
 mongoose
   .connect(uri)
   .then(() => console.log('DB Connected'))
